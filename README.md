@@ -5,6 +5,7 @@
 1. jwt token 
 2. refresh token
 3. roles base authentication
+4. public routes and private routes (private with role base access)
 
 #### Backend - Frameworks
 - node.js
