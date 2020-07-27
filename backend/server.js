@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 
 const errorHandle = require("./_helpers/error-handle");
+require("./db/connection");
 
 const port = process.env.PORT || 4000;
 const app = express();
