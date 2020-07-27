@@ -1,4 +1,6 @@
 const jwt = require("express-jwt");
+
+const User = require("../db/models/user");
 const secret = process.env.SECRET || "secret";
 
 const authorize = (roles = []) => {
@@ -8,10 +10,12 @@ const authorize = (roles = []) => {
 
   return [
     jwt({ secret, algorithms: ["HS256"] }),
-    (req, res, next) => {
-      if (roles.length && !roles.includes(req.user.role)) {
+    async (req, res, next) => {
+      const user = await User.findById(req.user.sub);
+      if (!user || (roles.length && !roles.includes(user.role))) {
         return res.status(401).json({ message: "Unauthorized" });
       }
+      req.user.role = user.role;
       next();
     },
   ];

@@ -11,7 +11,9 @@
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "mongoose": "^5.9.25",
-    "rand-token": "^1.0.1"
+    "rand-token": "^1.0.1",
+    "swagger-ui-express": "^4.1.4",
+    "yamljs": "^0.3.0"
   },
   "scripts": {
     "start": "nodemon server.js"

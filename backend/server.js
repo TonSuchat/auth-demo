@@ -3,7 +3,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
-const errorHandle = require("./_helpers/error-handle");
+const errorHandle = require("./_middleware/error-handle");
 require("./db/connection");
 
 const port = process.env.PORT || 4000;
@@ -16,6 +16,9 @@ app.use(cookieParser());
 // api routes
 app.use("/users", require("./users/user.controller"));
 app.use("/token", require("./token/token.controller"));
+
+// swagger docs route
+app.use("/api-docs", require("./_helpers/swagger"));
 
 // global error handle
 app.use(errorHandle);

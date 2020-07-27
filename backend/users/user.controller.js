@@ -1,8 +1,8 @@
 const express = require("express");
 
 const userService = require("./user.service");
-const authorize = require("../_helpers/authorize");
-const Role = require("../_helpers/roles");
+const authorize = require("../_middleware/authorize");
+const Role = require("../_shared/roles");
 
 const router = express.Router();
 
@@ -16,10 +16,13 @@ const register = async (req, res, next) => {
     if (!newUser) {
       return next(new Error("Can't create new user"));
     }
-    const loginResponse = await userService.login({
-      email: body.email,
-      password: body.password,
-    }, res);
+    const loginResponse = await userService.login(
+      {
+        email: body.email,
+        password: body.password,
+      },
+      res
+    );
     res.json(loginResponse);
   } catch (error) {
     next(error);
