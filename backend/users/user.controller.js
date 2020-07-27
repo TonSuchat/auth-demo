@@ -19,7 +19,7 @@ const register = async (req, res, next) => {
     const loginResponse = await userService.login({
       email: body.email,
       password: body.password,
-    });
+    }, res);
     res.json(loginResponse);
   } catch (error) {
     next(error);
@@ -28,7 +28,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   try {
-    const loginResponse = await userService.login(req.body);
+    const loginResponse = await userService.login(req.body, res);
     if (!loginResponse) {
       return res.status(400).json({ message: "Invalid email or password" });
     }

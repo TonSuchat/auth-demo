@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const errorHandle = require("./_helpers/error-handle");
@@ -10,9 +11,11 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // api routes
 app.use("/users", require("./users/user.controller"));
+app.use("/token", require("./token/token.controller"));
 
 // global error handle
 app.use(errorHandle);
