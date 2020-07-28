@@ -21,7 +21,7 @@ const TopBar: React.FC<TopBarType> = ({ onLogout }) => {
         <a onClick={onLogout} className="level-item" href="#">
           Logout
         </a>
-        <span>Hello {getUserData()?.userName}</span>
+        <span>Hello {getUserData()?.user?.email}</span>
       </div>
     </nav>
   );

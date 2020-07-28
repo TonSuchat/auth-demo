@@ -26,12 +26,12 @@ const Login: React.FC<LoginType> = ({ onLogin, error }) => {
                   Login
                 </h3>
                 <div className="field">
-                  <label className="label">Username</label>
+                  <label className="label">Email</label>
                   <div className="control">
                     <input
                       className="input"
-                      name="username"
-                      type="text"
+                      name="email"
+                      type="email"
                       ref={register({ required: true })}
                     />
                   </div>

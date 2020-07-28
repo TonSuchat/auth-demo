@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Layout from "./layout";
 import Login from "./login";
 import Register from "./register";
+import Home from "./Home";
 
 import { checkIsAuthen } from "../auth";
 
@@ -34,10 +35,9 @@ const PrivateRoute: React.FC<PrivateRouteType> = ({
 const AppRouters = () => {
   return (
     <Switch>
-      <Route path="/" component={Login} />
       <Route path="/register" exact component={Register} />
-      <Route path="/login" component={Login} />
-      {/* <PrivateRoute path="/dashboard" exact={true} component={Dashboard} /> */}
+      <Route path="/login" exact component={Login} />
+      <PrivateRoute path="/" exact={true} component={Home} />
       {/* <PrivateRoute path="/timeline" exact={true} component={Timeline} /> */}
       {/* <PrivateRoute path="/profile/:id" exact={true} component={Profile} /> */}
     </Switch>
