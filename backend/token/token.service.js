@@ -14,7 +14,7 @@ const setRefreshTokenCookie = async (userId, res, token = null) => {
 
 const generateToken = (id, role) => {
   return jwt.sign({ sub: id, role: role }, secret, {
-    expiresIn: "30m",
+    expiresIn: "10m",
   });
 };
 

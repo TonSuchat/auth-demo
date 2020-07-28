@@ -1,7 +1,7 @@
 import React from "react";
-import useFetch from "use-http";
+import { instance } from "../../apis/apiBase";
 
-import { logout } from "../../auth";
+import { clearUserData } from "../../auth";
 import TopBar from "../TopBar";
 
 type LayoutType = {
@@ -10,12 +10,10 @@ type LayoutType = {
 };
 
 const Index: React.FC<LayoutType> = (props: any) => {
-  const { get, response } = useFetch();
-
   const onLogout = async () => {
-    await get("/logout");
-    if (response.ok) {
-      logout();
+    const response = await instance.post("/user/logout");
+    if (response.status === 200) {
+      clearUserData();
       props.history.push("/login");
     }
   };

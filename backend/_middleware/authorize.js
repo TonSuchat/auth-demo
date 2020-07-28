@@ -13,7 +13,7 @@ const authorize = (roles = []) => {
     async (req, res, next) => {
       const user = await User.findById(req.user.sub);
       if (!user || (roles.length && !roles.includes(user.role))) {
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ message: "Access denied" });
       }
       req.user.role = user.role;
       next();

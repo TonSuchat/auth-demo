@@ -5,6 +5,7 @@ import Layout from "./layout";
 import Login from "./login";
 import Register from "./register";
 import Home from "./Home";
+import UserList from "./userList";
 
 import { checkIsAuthen } from "../auth";
 
@@ -19,17 +20,19 @@ const PrivateRoute: React.FC<PrivateRouteType> = ({
   path,
   exact,
 }) => {
-  return checkIsAuthen() ? (
-    <Route
-      render={(props) => (
-        <Layout {...props}>
-          <Route path={path} exact={exact} component={component} />
-        </Layout>
-      )}
-    />
-  ) : (
-    <Redirect to="/login" />
-  );
+  return checkIsAuthen()
+    ? (
+      <Route
+        render={(props) => (
+          <Layout {...props}>
+            <Route path={path} exact={exact} component={component} />
+          </Layout>
+        )}
+      />
+    )
+    : (
+      <Redirect to="/login" />
+    );
 };
 
 const AppRouters = () => {
@@ -38,8 +41,7 @@ const AppRouters = () => {
       <Route path="/register" exact component={Register} />
       <Route path="/login" exact component={Login} />
       <PrivateRoute path="/" exact={true} component={Home} />
-      {/* <PrivateRoute path="/timeline" exact={true} component={Timeline} /> */}
-      {/* <PrivateRoute path="/profile/:id" exact={true} component={Profile} /> */}
+      <PrivateRoute path="/admin/users" exact={true} component={UserList} />
     </Switch>
   );
 };

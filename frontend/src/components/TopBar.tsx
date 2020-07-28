@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { getUserData } from "../auth";
+import { getUserData, getRole } from "../auth";
 
 type TopBarType = {
   onLogout: () => void;
@@ -11,12 +11,11 @@ const TopBar: React.FC<TopBarType> = ({ onLogout }) => {
     <nav className="level">
       <div className="level-left"></div>
       <div className="level-right">
-        <Link className="level-item" to="/dashboard">
-          Home
-        </Link>
-        <Link className="level-item" to="/timeline">
-          Timeline
-        </Link>
+        {getRole() === "Admin" && (
+          <Link className="level-item" to="/admin/users">
+            Users
+          </Link>
+        )}
         {/* eslint-disable-next-line */}
         <a onClick={onLogout} className="level-item" href="#">
           Logout

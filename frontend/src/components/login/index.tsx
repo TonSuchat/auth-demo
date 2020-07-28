@@ -9,11 +9,15 @@ const Index: React.FC = (props: any) => {
   const [error, setError] = useState("");
 
   const onLogin = async (data: Record<string, any>) => {
-    const response = await instance.post("/user/login", data);
-    if (response.status === 200) {
-      setAuthen(response.data);
-      props.history.push("/");
-    } else setError(response.data);
+    try {
+      const response = await instance.post("/user/login", data);
+      if (response.status === 200) {
+        setAuthen(response.data);
+        props.history.push("/");
+      }
+    } catch (error) {
+      setError(error.response.data.message);
+    }
   };
 
   if (checkIsAuthen()) {

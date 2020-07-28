@@ -22,6 +22,11 @@ export const getJwtToken = () => {
   return userData?.token;
 };
 
-export const logout = () => {
+export const getRole = () => {
+  const userData = getUserData();
+  return userData?.user.role;
+};
+
+export const clearUserData = () => {
   localStorage.removeItem("userData");
 };
