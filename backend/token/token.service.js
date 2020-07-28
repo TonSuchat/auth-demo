@@ -7,7 +7,7 @@ const RefreshToken = require("../db/models/refreshToken");
 const setRefreshTokenCookie = async (userId, res, token = null) => {
   if (!token) token = await generateRefreshToken(userId);
   res.cookie("refreshtoken", token.token, {
-    maxAge: token.expires.getTime() / 1000,
+    expires: token.expires,
     httpOnly: true,
   });
 };
@@ -51,14 +51,14 @@ const refreshToken = async (refreshToken, userId, res) => {
 
 const revokeToken = async (token) => {
   const revokeToken = await getRefreshToken(token);
-  console.log(revokeToken);
   if (!revokeToken) throw "Revoke token not found";
   revokeToken.revoked = Date.now();
   await revokeToken.save();
 };
 
-const getAllRefreshTokens = () => {
-  return refreshTokens;
+const getAllRefreshTokens = async (userId) => {
+  if (!userId) return await RefreshToken.find();
+  return await RefreshToken.find({ user });
 };
 
 module.exports = {

@@ -14,7 +14,7 @@ app.use(cors());
 app.use(cookieParser());
 
 // api routes
-app.use("/users", require("./users/user.controller"));
+app.use("/user", require("./users/user.controller"));
 app.use("/token", require("./token/token.controller"));
 
 // swagger docs route

@@ -3,6 +3,7 @@ const express = require("express");
 const userService = require("./user.service");
 const authorize = require("../_middleware/authorize");
 const Role = require("../_shared/roles");
+const tokenService = require("../token/token.service");
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ const register = async (req, res, next) => {
         email: body.email,
         password: body.password,
       },
-      res
+      res,
     );
     res.json(loginResponse);
   } catch (error) {
@@ -36,6 +37,18 @@ const login = async (req, res, next) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
     res.json(loginResponse);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const logout = async (req, res, next) => {
+  try {
+    if (!req.cookies.refreshtoken) {
+      return res.status(200).json({ message: "Logout success" });
+    }
+    await tokenService.revokeToken(req.cookies.refreshtoken);
+    return res.status(200).json({ message: "Logout success" });
   } catch (error) {
     next(error);
   }
@@ -66,6 +79,7 @@ const getUser = async (req, res, next) => {
 // routes
 router.post("/register", register);
 router.post("/login", login);
+router.post("/logout", authorize(), logout);
 router.get("/getUsers", authorize(Role.Admin), getUsers);
 router.get("/getUser/:id", authorize(), getUser);
 

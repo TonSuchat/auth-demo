@@ -1,13 +1,14 @@
 const express = require("express");
 
 const authorize = require("../_middleware/authorize");
+const Role = require("../_shared/roles");
 const tokenService = require("./token.service");
 
 const router = express.Router();
 
-const getAllRefreshTokens = (_req, res, next) => {
+const getAllRefreshTokens = async (req, res, next) => {
   try {
-    res.json(tokenService.getAllRefreshTokens());
+    res.json(await tokenService.getAllRefreshTokens(req.params.userId));
   } catch (error) {
     next(error);
   }
@@ -41,8 +42,8 @@ const revokeToken = async (req, res, next) => {
 };
 
 // routes
-router.get("/getAllRefreshTokens", authorize(), getAllRefreshTokens);
+router.get("/getAllRefreshTokens", authorize(Role.Admin), getAllRefreshTokens);
 router.post("/refreshToken", refreshToken);
-router.post("/revokeToken", revokeToken);
+router.post("/revokeToken", authorize(), revokeToken);
 
 module.exports = router;

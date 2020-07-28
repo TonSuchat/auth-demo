@@ -16,7 +16,6 @@ refreshTokenSchema.virtual("isExpired").get(function () {
 });
 
 refreshTokenSchema.virtual("isActive").get(function () {
-  console.log("revoked-condition", this.revoked);
   return !this.revoked && !this.isExpired;
 });
 
